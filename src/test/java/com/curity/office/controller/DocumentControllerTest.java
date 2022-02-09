@@ -18,12 +18,11 @@ class DocumentControllerTest {
 
     @Test
     void approval() {
-        System.out.println(documentController.approval((long) 1,true,"test",(long)1));
+        //System.out.println(documentController.approval((long) 1,true,"test",(long)1));
     }
 
     @Test
     void getById() {
-
-        System.out.println(documentController.getById((long) 1));
+        //System.out.println(documentController.getById((long) 1));
     }
 }

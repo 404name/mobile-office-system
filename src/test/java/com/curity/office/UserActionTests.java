@@ -1,5 +1,7 @@
 package com.curity.office;
 
+import com.curity.office.common.Result;
+import com.curity.office.controller.AuthController;
 import com.curity.office.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +12,10 @@ import xyz.erupt.upms.base.LoginModel;
 class UserActionTests {
 
     @Autowired
-    private UserService userService; //使用方式与 mybatis-plus 大同小异
+    private AuthController authController; //使用方式与 mybatis-plus 大同小异
     @Test
     void login(){
-        LoginModel login = userService.login("erupt", "erupt");
-        System.out.println(login.toString());
-        System.out.println(login.getReason());
+        Result login = authController.login("erupt", "erupt","123");
+        System.out.println(login);
     }
 }

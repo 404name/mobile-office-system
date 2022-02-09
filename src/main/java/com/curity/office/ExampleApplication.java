@@ -20,9 +20,9 @@ public class ExampleApplication extends SpringBootServletInitializer {
     public static void main(String[] args) {
         SpringApplication.run(ExampleApplication.class, args);
         try {
-            System.setProperty("java.awt.headless", "false");
+            System.setProperty("java.awt.headless", "true");
             //开启后跳转
-            Desktop.getDesktop().browse(new URI("http://localhost:8080"));
+            //Desktop.getDesktop().browse(new URI("http://localhost:8080"));
         } catch (Exception e) {
             System.setProperty("java.awt.headless", "true");
         }

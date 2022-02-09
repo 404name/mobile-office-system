@@ -56,4 +56,6 @@ server:
     includeException: true
     includeStacktrace: ALWAYS
     includeMessage: ALWAYS
+  # 有环境变量用变量没有就：后面的
+  port: ${office_port:8080}
 

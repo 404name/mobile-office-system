@@ -6,6 +6,7 @@ import com.curity.office.model.vo.DictVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@CrossOrigin
 @RestController
 @PropertySource("classpath:application.yml")//读取application.yml文件
 @RequestMapping("/erupt-api/office")
@@ -29,7 +30,7 @@ public class SystemInfoController {
     private String version;
     @Value("${erupt-app.versionMsg}")
     private String versionMsg;
-    @GetMapping("/")
+    @GetMapping()
     public Result systemInfo() {
         HashMap<String, Object> map = new HashMap<>();
         Integer integer = eruptDao.getJdbcTemplate().queryForObject("select id from e_dict where code = 'state'", Integer.class);

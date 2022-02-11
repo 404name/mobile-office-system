@@ -9,7 +9,7 @@ import xyz.erupt.core.annotation.EruptScan;
 import java.awt.*;
 import java.net.URI;
 
-
+// TODO： 接入微信WXJAVA ： {https://github.com/binarywang/weixin-java-miniapp-demo/blob/master/pom.xml}
 //@EruptAttachmentUpload(xxxxxx.class)
 @SpringBootApplication
 @EntityScan

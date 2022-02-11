@@ -4,10 +4,7 @@ import com.curity.office.common.Result;
 import com.curity.office.service.DocumentService;
 import com.curity.office.model.Document;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import xyz.erupt.core.annotation.EruptRouter;
 
 /**
@@ -16,8 +13,9 @@ import xyz.erupt.core.annotation.EruptRouter;
  * @author: CTGU_LLZ(404name)
  * @create: 2022-02-08 21:22
  **/
+@CrossOrigin
 @RestController //使用此注解实现依赖注入相关功能（可选）
-@RequestMapping("/erupt-api/office")
+@RequestMapping("/erupt-api/office/document")
 public class DocumentController {
 
     @Autowired

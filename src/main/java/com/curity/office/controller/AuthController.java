@@ -24,10 +24,10 @@ import xyz.erupt.upms.vo.AdminUserinfo;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
-
+@CrossOrigin
 @RestController //使用此注解实现依赖注入相关功能（可选）
 @Transactional
-@RequestMapping("/erupt-api/office")
+@RequestMapping("/erupt-api/office/auth")
 public class AuthController {
 
     @Autowired
@@ -77,7 +77,7 @@ public class AuthController {
      * 注册
      * @return
      */
-    @GetMapping("/register")
+    @PostMapping("/register")
     public Result register(@RequestParam("account") String account, @RequestParam("pwd") String pwd, @RequestParam(name = "verifyCode",required = false) String verifyCode){
         try {
             EruptUser eruptUser = new EruptUser();
@@ -100,7 +100,7 @@ public class AuthController {
         return Result.success("注册成功");
     }
     /**
-     * 注册
+     * 注销
      * @return
      */
     @PostMapping({"/logout"})
@@ -123,7 +123,7 @@ public class AuthController {
      * 第三方登录/注册 自动绑定用户
      * @return
      */
-    @GetMapping("/login")
+    @PostMapping("/login")
     public Result login(@RequestParam("account") String account, @RequestParam("pwd") String pwd, @RequestParam(name = "verifyCode",required = false) String verifyCode) {
         MD5 md5 = new MD5();
         pwd = md5.digestHex(md5.digestHex(pwd) + Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + account);

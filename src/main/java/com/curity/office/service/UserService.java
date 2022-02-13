@@ -15,6 +15,11 @@ public interface UserService {
      * 获取当前用户
      * @return
      */
+    EruptUser update(EruptUser eruptUser);
+    /**
+     * 获取当前用户
+     * @return
+     */
     AdminUserinfo currentUser();
 
     /**

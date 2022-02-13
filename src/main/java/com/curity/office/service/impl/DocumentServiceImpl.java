@@ -10,6 +10,7 @@ import com.curity.office.workflow.ApprovalStatus;
 import com.curity.office.workflow.StateMachine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import xyz.erupt.jpa.dao.EruptDao;
 import xyz.erupt.upms.service.EruptUserService;
 import xyz.erupt.upms.vo.AdminUserinfo;
 
@@ -32,10 +33,50 @@ public class DocumentServiceImpl implements DocumentService {
     EruptUserService eruptUserService;
     @Autowired
     AuthUserRepository authUserRepository;
+    @Autowired
+    EruptDao eruptDao;
 
     @Override
     public Document getById(Long id) {
         return documentRepository.getById(id);
+    }
+
+    @Override
+    public Document add(Document document) {
+        String state = document.getState();
+        if(state.equals("0")|| state.equals("1")){
+
+            DocumentHistory history = new DocumentHistory();
+            history.setApprover(document.getPublisher());
+            history.setApproverName(document.getPublisherName());
+            history.setPublish(true);
+            history.setDate(new Date());
+            history.setState("0");
+            if(state.equals("0")){
+                history.setRemark("创建公文(草稿未提交)");
+            }else  if(state.equals("1")) {
+                history.setRemark("提交了公文审批");
+            }
+            // TODO: 查找用户名
+            String img = "";
+            // 两种方案，按照authUser查，直接按照 id拼接获取url图片
+            history.setPic("/2022-02-08/KtYeuOvNajhQ.jpg");
+            Set<DocumentHistory> documentHistory = document.getDocumentHistory();
+            documentHistory.add(history);
+            document.setDocumentHistory(documentHistory);
+            System.out.println(documentHistory);
+        }
+        return documentRepository.save(document);
+    }
+
+    @Override
+    public Document upadte(Document document) {
+        return documentRepository.save(document);
+    }
+
+    @Override
+    public void delete(Long id) {
+        documentRepository.deleteById(id);
     }
 
     @Override
@@ -97,9 +138,11 @@ public class DocumentServiceImpl implements DocumentService {
 
 
     @Override
-    public List<DocumentHistory> getProcessed() {
+    public List<Map<String, Object>> getProcessed() {
         AdminUserinfo adminUserinfo = this.eruptUserService.getAdminUserInfo();
-        return documentHistoryRepository.findAllByApprover(adminUserinfo.getId());
+        List<Map<String, Object>> list1 = eruptDao.getJdbcTemplate()
+                .queryForList("select * from office_document_history where approver = " + adminUserinfo.getId());
+        return list1;
     }
 
     @Override

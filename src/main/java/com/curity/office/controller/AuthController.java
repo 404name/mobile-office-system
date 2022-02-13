@@ -15,6 +15,8 @@ import xyz.erupt.core.view.EruptApiModel;
 import xyz.erupt.jpa.dao.EruptDao;
 import xyz.erupt.upms.base.LoginModel;
 import xyz.erupt.upms.fun.LoginProxy;
+import xyz.erupt.upms.model.EruptOrg;
+import xyz.erupt.upms.model.EruptPost;
 import xyz.erupt.upms.model.EruptUser;
 import xyz.erupt.upms.service.EruptContextService;
 import xyz.erupt.upms.service.EruptSessionService;
@@ -38,7 +40,6 @@ public class AuthController {
     private EruptUserService eruptUserService;
     @Autowired
     private EruptSessionService sessionService;
-
     @Autowired
     private EruptContextService eruptContextService;
     @Autowired
@@ -73,6 +74,25 @@ public class AuthController {
     public Result currentDetailUser(){
         return Result.success(eruptUserService.getCurrentEruptUser());
     }
+
+    /**
+     * 更新用户信息
+     * @return
+     */
+    @EruptRouter(
+            verifyType = EruptRouter.VerifyType.LOGIN
+    )
+    @PostMapping("/update")
+    public Result updateUser(@RequestParam("name") String name,
+                             @RequestParam("phone") String phone,
+                             @RequestParam("email") String email){
+        EruptUser currentEruptUser = eruptUserService.getCurrentEruptUser();
+        currentEruptUser.setName(name);
+        currentEruptUser.setPhone(phone);
+        currentEruptUser.setEmail(email);
+        return Result.success(userService.update(currentEruptUser));
+    }
+
     /**
      * 注册
      * @return
@@ -82,6 +102,12 @@ public class AuthController {
         try {
             EruptUser eruptUser = new EruptUser();
             eruptUser.setAccount(account);
+            eruptUser.setName(account);
+            //默认部门 + 默认员工等级
+            EruptOrg org = eruptDao.queryEntity(EruptOrg.class, "id = 5");
+            EruptPost eruptPost = eruptDao.queryEntity(EruptPost.class, "id = 1");
+            eruptUser.setEruptOrg(org);
+            eruptUser.setEruptPost(eruptPost);
             eruptUser.setPassword(MD5Util.digest(pwd));
             eruptUser.setIsAdmin(false);
             eruptUser.setCreateTime(new Date());

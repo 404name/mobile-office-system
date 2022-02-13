@@ -4,6 +4,7 @@ import com.curity.office.model.Document;
 import com.curity.office.model.DocumentHistory;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @program: erupt-example
@@ -17,6 +18,21 @@ public interface DocumentService {
      * @return
      */
     Document getById(Long id);
+    /**
+     * 创建公文
+     * @return
+     */
+    Document add(Document document);
+    /**
+     * 更新公文
+     * @return
+     */
+    Document upadte(Document document);
+    /**
+     * 删除公文
+     * @return
+     */
+    void delete(Long id);
     /**
      * 获取所有
      * @return
@@ -41,7 +57,7 @@ public interface DocumentService {
      * 获取审批历史
      * @return
      */
-    List<DocumentHistory> getProcessed();
+    List<Map<String, Object>>  getProcessed();
     /**
      * 审批流程
      * @param documentId 审批公文id

@@ -68,4 +68,23 @@ public class DocumentController {
     public Result getProcessed() {
         return Result.success(documentService.getProcessed());
     }
+
+
+    @PostMapping("/")
+    @EruptRouter(
+            verifyType = EruptRouter.VerifyType.LOGIN
+    )
+    public Result add(@RequestBody Document document) {
+        return Result.success(documentService.add(document));
+    }
+
+
+    @DeleteMapping("/")
+    @EruptRouter(
+            verifyType = EruptRouter.VerifyType.LOGIN
+    )
+    public Result delete(@RequestParam("id") Long id) {
+        documentService.delete(id);
+        return Result.success("删除成功");
+    }
 }

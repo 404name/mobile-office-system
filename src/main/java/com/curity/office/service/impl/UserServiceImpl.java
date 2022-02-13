@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.erupt.jpa.dao.EruptDao;
 import xyz.erupt.upms.base.LoginModel;
+import xyz.erupt.upms.model.EruptUser;
 import xyz.erupt.upms.service.EruptUserService;
 import xyz.erupt.upms.vo.AdminUserinfo;
 
@@ -27,6 +28,12 @@ public class UserServiceImpl implements UserService {
     DocumentHistoryRepository documentHistoryRepository;
     @Autowired
     EruptDao eruptDao;
+
+    @Override
+    public EruptUser update(EruptUser eruptUser) {
+        return eruptDao.merge(eruptUser);
+    }
+
     @Override
     public AdminUserinfo currentUser() {
 

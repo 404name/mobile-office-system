@@ -34,9 +34,8 @@ spring:
   profiles:
     active: dev
   redis:
-    host: 110.42.134.117
+    host: 404name.top
     port: 6379
-    password: 13979933306
     timeout: 20000
     # password:
     pool:

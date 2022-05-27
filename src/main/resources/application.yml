@@ -34,10 +34,10 @@ spring:
   profiles:
     active: dev
   redis:
-    host: 404name.top
+    host: lightcloud.online
     port: 6379
     timeout: 20000
-    # password:
+    password: 13979933306
     pool:
       minIdle: 0
       maxIdle: 8
